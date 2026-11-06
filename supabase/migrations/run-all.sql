@@ -1,0 +1,12 @@
+-- ispy — run-all.sql
+--
+-- There is only one migration so far: 00001_ispy_schema.sql.
+--
+-- SUPPORTED PATH (use this): Supabase dashboard > SQL Editor > paste the
+-- contents of 00001_ispy_schema.sql > Run. See supabase/README.md.
+--
+-- The \i command below is psql-only and does NOT work in the SQL editor.
+-- It is here only for local psql users. If you are in the SQL editor,
+-- ignore it — paste 00001 directly.
+--
+-- \i 00001_ispy_schema.sql
