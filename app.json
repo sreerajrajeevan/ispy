@@ -1,1 +1,54 @@
-{"expo":{"android":{"adaptiveIcon":{"backgroundColor":"#F3EFFF","foregroundImage":"./assets/adaptive-icon.png"},"package":"com.sree.ispy","permissions":["CAMERA"]},"icon":"./assets/icon.png","ios":{"bundleIdentifier":"com.sree.ispy","infoPlist":{"NSCameraUsageDescription":"ispy needs your camera so you can take a live photo for today's clue."},"supportsTablet":true},"name":"ispy","orientation":"portrait","plugins":[["expo-camera",{"cameraPermission":"ispy needs your camera so you can take a live photo for today's clue."}]],"scheme":"ispy","slug":"ispy","splash":{"backgroundColor":"#F3EFFF","image":"./assets/splash.png","resizeMode":"contain"},"userInterfaceStyle":"light","version":"0.1.0","web":{"bundler":"metro","favicon":"./assets/favicon.png","output":"static"}}}
+{
+  "expo": {
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F3EFFF",
+        "foregroundImage": "./assets/adaptive-icon.png"
+      },
+      "package": "com.sree.ispy",
+      "permissions": [
+        "CAMERA"
+      ]
+    },
+    "icon": "./assets/icon.png",
+    "ios": {
+      "bundleIdentifier": "com.sree.ispy",
+      "infoPlist": {
+        "NSCameraUsageDescription": "ispy needs your camera so you can take a live photo for today's clue."
+      },
+      "supportsTablet": true
+    },
+    "name": "ispy",
+    "orientation": "portrait",
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "ispy needs your camera so you can take a live photo for today's clue."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.25"
+          }
+        }
+      ]
+    ],
+    "scheme": "ispy",
+    "slug": "ispy",
+    "splash": {
+      "backgroundColor": "#F3EFFF",
+      "image": "./assets/splash.png",
+      "resizeMode": "contain"
+    },
+    "userInterfaceStyle": "light",
+    "version": "0.1.0",
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png",
+      "output": "static"
+    }
+  }
+}
