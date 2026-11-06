@@ -35,7 +35,8 @@
           }
         }
       ],
-      "./plugins/withBundleInDebug"
+      "./plugins/withBundleInDebug",
+      "./plugins/withSharedDebugKeystore"
     ],
     "scheme": "ispy",
     "slug": "ispy",
