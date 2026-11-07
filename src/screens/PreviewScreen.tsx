@@ -32,7 +32,7 @@ export default function PreviewScreen({ navigation, route }: any) {
     setPosting(true);
     setError(null);
     try {
-      await uploadLivePhoto(photoUri, clueId, caption.trim());
+      await uploadLivePhoto(photoUri, clueId, caption.trim(), isDaily);
       navigation.navigate('MainTabs');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not post your photo. Please try again.');

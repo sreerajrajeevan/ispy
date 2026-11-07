@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState, type Re
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import { isMockMode, supabase } from '../services/supabase';
+import { ensureProfile } from '../services/data';
 import { mockMe } from '../mock';
 import type { Profile } from '../types';
 
@@ -42,11 +43,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (isMockMode || !supabase) { setLoading(false); return; }
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session?.user) setUser({ ...mockMe, id: data.session.user.id, username: data.session.user.email?.split('@')[0] ?? 'you' });
+      if (data.session?.user) {
+        // Profiles are created by the app after sign-in (no DB trigger), and
+        // every write FK-references profiles(id) — create the row here so
+        // posting can never hit the missing-profile error. Never blocks
+        // sign-in if it fails; the write paths retry it before inserting.
+        ensureProfile(data.session.user).catch(() => {});
+        setUser({ ...mockMe, id: data.session.user.id, username: data.session.user.email?.split('@')[0] ?? 'you' });
+      }
       setLoading(false);
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session?.user) setUser({ ...mockMe, id: session.user.id, username: session.user.email?.split('@')[0] ?? 'you' });
+      if (session?.user) {
+        ensureProfile(session.user).catch(() => {});
+        setUser({ ...mockMe, id: session.user.id, username: session.user.email?.split('@')[0] ?? 'you' });
+      }
       else setUser(null);
     });
     return () => sub.subscription.unsubscribe();
