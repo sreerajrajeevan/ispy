@@ -77,7 +77,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const code = extractParam(res.url, 'code');
       if (!code) {
         const detail = extractParam(res.url, 'error_description') || extractParam(res.url, 'error');
-        throw new Error(detail ? `Google sign-in failed: ${detail}` : 'Google sign-in completed without an auth code.');
+        if (detail) throw new Error(`Google sign-in failed: ${detail}`);
+        // No code but a token means Supabase used the implicit flow instead
+        // of PKCE (flowType must be 'pkce' in the Supabase client) — say so
+        // plainly instead of the generic message, it decides the fix.
+        if (extractParam(res.url, 'access_token')) throw new Error('Google sign-in returned a token instead of an auth code (flow mismatch — the app needs the PKCE code flow).');
+        throw new Error('Google sign-in completed without an auth code.');
       }
       const { data: sessionData, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
       if (exchangeError) throw new Error(friendlyAuthError(exchangeError.message));

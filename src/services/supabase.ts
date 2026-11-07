@@ -16,5 +16,11 @@ export const supabase: SupabaseClient | null = isMockMode
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: false,
+        // PKCE is REQUIRED for the app's Google flow: signInWithGoogle
+        // exchanges a ?code= bounced back to ispy://auth/callback. The
+        // installed auth-js defaults to flowType 'implicit', which instead
+        // bounces back #access_token=... with no code, so Google sign-in
+        // failed with "completed without an auth code" (2026-11-07).
+        flowType: 'pkce',
       },
     });
